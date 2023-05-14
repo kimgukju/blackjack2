@@ -4,7 +4,7 @@ public class Rule {
 	
 	private static final int BLACKJACK_NUM = 21;
 	
-	// 승패 확인
+	// 승패 겨루기
 	public void getWinner(int dealerSum, int gamerSum) {
 		
 		int dealerMinus = BLACKJACK_NUM - dealerSum;
@@ -19,7 +19,7 @@ public class Rule {
 		}
 	}
 	
-	// 버스트 확인
+	// 버스트(21초과하면 패배) 
 	public boolean isBust(Player player, int sum) {
 		String name = player.getName();
 		if(sum > 21) {

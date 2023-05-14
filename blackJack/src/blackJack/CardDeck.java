@@ -16,7 +16,7 @@ public class CardDeck {
 	
 	private List<Card> generatedDeck() {
 		List<Card> deck = new ArrayList<>();
-		
+		// 1=A, 11,12,13=J,Q,K 
 		for(String pattern : PATTERNS) {
 			for(int i = 1; i <= CARD_CNT; i++) {
 				String number = ""; 
@@ -51,6 +51,7 @@ public class CardDeck {
 				//	break;
 				//}
 				
+				// J,Q,K는 10값 주기위해 11이상이면 10으로 주기
 				if(i == 1) {
 					point = 1;
 				}else if(i >= 11) {

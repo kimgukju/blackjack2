@@ -16,13 +16,13 @@ public class Gamer implements Player {
 		return NAME;
 	}
 	
-	// 카드 받음
+	// 카드 받기
 	@Override
 	public void getCard(Card card) {
 		this.deck.add(card); 
 	}
 	
-	// 카드 오픈
+	// 카드 오픈하기
 	@Override
 	public void printCards() {
 		StringBuilder sb = new StringBuilder();

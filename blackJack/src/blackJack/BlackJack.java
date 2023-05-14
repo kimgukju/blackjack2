@@ -29,8 +29,8 @@ public class BlackJack {
 			System.out.println("1.뽑는다 2.멈춘다 0.게임나가기");
 			String sc = scan.nextLine();
 			
+			// 1 입력시 카드 드로우
 			if(sc.equals("1")) {
-				// 게이머에게 한장 줌
 				Card card = cardDeck.draw();
 				gamer.getCard(card);
 				dealer.printCards();
@@ -39,9 +39,8 @@ public class BlackJack {
 				if(rule.isBust(gamer, gamer.getSum())) {
 					break; 
 				}
-				
+			// 카드 뽑기그만하고 숫자 겨루기	
 			}else if(sc.equals("2")){
-				// 딜러 합 확인 뒤 승패 결정
 				dealer.checkDealerCards(cardDeck);
 				dealer.printCards("last");
 				gamer.printCards();
@@ -54,9 +53,8 @@ public class BlackJack {
 					rule.getWinner(dealer.getSum(), gamer.getSum());
 					break; 
 				}				
-				
+			// 게임나가기
 			}else {
-				// 게임 종료
 				break;
 			}
 			System.out.println("----------------------------");
@@ -64,6 +62,7 @@ public class BlackJack {
 		}
 	}
 	
+	//카드 2장뽑고 시작하기위해 2 스타트
 	private static final int INIT_RECEIVE_CARD_CNT = 2;
 	private void initGame(CardDeck cardDeck, Gamer gamer, Dealer dealer) {
 		for(int i = 0; i < INIT_RECEIVE_CARD_CNT; i++) {
