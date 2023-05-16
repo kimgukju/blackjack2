@@ -32,24 +32,7 @@ public class CardDeck {
 				} else if(i==13) {
 					number = "K";
 				}
-				//
-				//switch(i) {
-				//case 1 :
-				//	number = "A"; 
-				//	break;
-				//case 11 :
-				//	number = "J";
-				//	break;
-				//case 12 :
-				//	number = "Q";
-				//	break;
-				//case 13 :
-				//	number = "K";
-				//	break;
-				//default :
-				//	number = Integer.toString(i);
-				//	break;
-				//}
+				
 				
 				// J,Q,K는 10값 주기위해 11이상이면 10으로 주기
 				if(i == 1) {
