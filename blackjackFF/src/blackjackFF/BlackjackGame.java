@@ -1,33 +1,36 @@
-package blackJack2;
+package blackjackFF;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
-public class blackJackMain {
-	private List<String> deck;
-	private List<String> playerHand;
-	private List<String> dealerHand;
-	private int playerScore;
-	private int dealerScore;
+// 클래스나눈거임 
+public class BlackjackGame {
+	Rule rule = new Rule();
+    public Deck makedeck;
+    private List<String> deck;
+    private List<String> playerHand;
+    private List<String> dealerHand;
+    private int playerScore;
+    private int dealerScore;
+    private Scanner scanner;
 	private int playerCoin;
 	private int dealerCoin;
-	private Scanner scanner;
 
-	public blackJackMain() {
-		deck = new ArrayList<>();
-		playerHand = new ArrayList<>();
-		dealerHand = new ArrayList<>();
-		playerScore = 0;
-		dealerScore = 0;
-		playerCoin = 5;
+    public BlackjackGame() {
+        makedeck = new Deck();
+        deck = new ArrayList<>();
+        playerHand = new ArrayList<String>();
+        dealerHand = new ArrayList<String>();
+        playerScore = 0;
+        dealerScore = 0;
+        scanner = new Scanner(System.in);
+        playerCoin = 5;
 		dealerCoin = 5;
-		scanner = new Scanner(System.in);
-	}
+    }
 
-	public void startGame() {
-		boolean tokenOver;
+    public void startGame() {
+    	boolean tokenOver;
 		System.out.println("* BlackJack *");
 		System.out.println("게임 시작(S) 게임 규칙(T) 게임 종료(Q)");
 
@@ -35,11 +38,11 @@ public class blackJackMain {
 			String input = scanner.nextLine();
 			if (input.equalsIgnoreCase("S")) {
 				tokenOver = false;
-				clear();
+				rule.clear();
 				break;
 			} else if (input.equalsIgnoreCase("T")) {
-				clear();
-				rule();
+				rule.clear();
+				rule.rule();
 				System.out.println("게임 시작(S) 게임 규칙(T) 게임 종료(Q)");
 			} else if (input.equalsIgnoreCase("Q")) {
 				tokenOver = true;
@@ -48,8 +51,8 @@ public class blackJackMain {
 		}
 
 		while (!tokenOver) {
-			initializeDeck();
-			shuffleDeck();
+			makedeck.initializeDeck();
+			makedeck.shuffleDeck();
 			initialDeal();
 			String input = "";
 			boolean gameOver = false;
@@ -110,10 +113,10 @@ public class blackJackMain {
 				input = scanner.nextLine();
 				System.out.println();
 				if (input.equalsIgnoreCase("Y")) {
-					deck.clear();
-					playerHand.clear();
-					dealerHand.clear();
-					clear();
+					deck.clear(); // java clear
+					playerHand.clear(); // java clear
+					dealerHand.clear(); // java clear
+					rule.clear();
 				} else if (input.equalsIgnoreCase("Q")) {
 					System.err.print("종료시 모든 코인을 잃습니다. 종료(Y) 재시작(N)");
 					input = scanner.nextLine();
@@ -127,48 +130,27 @@ public class blackJackMain {
 				}
 			}
 		}
-	}
+    }
 
-	private void initializeDeck() {
-		String[] suits = { "♠", "♥", "♦", "♣" };
-		String[] ranks = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+    public void initialDeal() {
+        hit(playerHand);
+        hit(dealerHand);
+        hit(playerHand);
+        hit(dealerHand);
+        calculateScore();
+    }
 
-		for (String suit : suits) {
-			for (String rank : ranks) {
-				deck.add(suit + rank);
-			}
-		}
-	}
-
-	private void shuffleDeck() {
-		Random rand = new Random();
-		for (int i = 0; i < deck.size(); i++) {
-			int j = rand.nextInt(deck.size());
-			String temp = deck.get(i);
-			deck.set(i, deck.get(j));
-			deck.set(j, temp);
-		}
-	}
-
-	private void initialDeal() {
-		hit(playerHand);
-		hit(dealerHand);
-		hit(playerHand);
-		hit(dealerHand);
-		calculateScore();
-	}
-
-	private void hit(List<String> hand) {
-		String card = deck.remove(deck.size() - 1);
+	public void hit(List<String> hand) {
+		String card = makedeck.deck.remove(makedeck.deck.size() - 1);
 		hand.add(card);
 	}
 
-	private void calculateScore() {
+	public void calculateScore() {
 		playerScore = calculateHandScore(playerHand);
 		dealerScore = calculateHandScore(dealerHand);
 	}
-
-	private int calculateHandScore(List<String> hand) {
+	
+	public int calculateHandScore(List<String> hand) {
 		int score = 0;
 		int aceCount = 0;
 
@@ -233,27 +215,8 @@ public class blackJackMain {
 		}
 	}
 
-	public void rule() {
-		System.out.println("# 규칙 설명 #");
-		System.out.println("1. 유저와 딜러에게 각각 5코인씩 지급");
-		System.out.println("   게임 승리시 +1 코인 패배시 -1 코인");
-		System.out.println("   보유 코인이 0이 되면 Game Over가 됩니다.\n");
-		System.out.println("2. 시작 시 두장의 카드를 뽑습니다.   ");
-		System.out.println("   보유 카드가 21이 될때까지 카드를 계속 뽑을 수 있습니다.");
-		System.out.println("   보유 카드의 합이 21이 되면 승리하고, 초과하면 패배합니다.");
-		System.out.println("   결과 확인시 보유 카드의 합이 21에 가까운 사람이 승리합니다.\n");
-		System.out.println("3. ACE카드는 11점으로 계산합니다.   ");
-		System.out.println("   보유 카드의 합이 21점을 넘으면 ACE카드는 1점으로 계산합니다.");
-		System.out.println("4. J, Q, K 카드의 점수는 10점으로 계산합니다.");
-		System.out.println();
-	}
-
-	public void clear() {
-		System.out.print("\n".repeat(10));
-	}
-
-	public static void main(String[] args) {
-		blackJackMain game = new blackJackMain();
-		game.startGame();
-	}
+    public static void main(String[] args) {
+        BlackjackGame game = new BlackjackGame();
+        game.startGame();
+    }
 }
