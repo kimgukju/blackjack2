@@ -59,8 +59,8 @@ public class BlackjackGame {
 
 			System.out.println("-".repeat(30));
 			while (!gameOver) {
-				System.out.println("딜러 손패 : " + dealerHand.get(0) + ", ?");
-				System.out.println("유저 손패 : " + playerHand + ", 점수: " + playerScore);
+				System.out.println("딜러 손패(1st) : " + dealerHand.get(0) + ", ?");
+				System.out.println("유저 손패(1st) : " + playerHand + ", 점수: " + playerScore);
 
 				if (playerScore == 21 || dealerScore == 21) {
 					gameOver = true;
@@ -215,8 +215,5 @@ public class BlackjackGame {
 		}
 	}
 
-    public static void main(String[] args) {
-        BlackjackGame game = new BlackjackGame();
-        game.startGame();
-    }
+ 
 }
