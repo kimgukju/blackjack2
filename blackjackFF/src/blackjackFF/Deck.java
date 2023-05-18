@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Deck {
-    public List<String> deck = new ArrayList<>();
+    public List<String> deck; //= new ArrayList<>();
 
-    public Deck() {
-        //deck = new ArrayList<>();
+    public void makeDeck() {
+        deck = new ArrayList<>();
         initializeDeck();
         shuffleDeck();
     }
